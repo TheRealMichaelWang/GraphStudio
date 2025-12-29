@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		45BBB06C2EF90D4C0041A500 /* MathParser in Frameworks */ = {isa = PBXBuildFile; productRef = 45BBB06B2EF90D4C0041A500 /* MathParser */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		45BBB05C2EF90AE10041A500 /* GraphStudio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GraphStudio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45BBB06C2EF90D4C0041A500 /* MathParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = GraphStudio;
 			packageProductDependencies = (
+				45BBB06B2EF90D4C0041A500 /* MathParser */,
 			);
 			productName = GraphStudio;
 			productReference = 45BBB05C2EF90AE10041A500 /* GraphStudio.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 45BBB0532EF90AE10041A500;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				45BBB06A2EF90D4C0041A500 /* XCRemoteSwiftPackageReference "swift-math-parser" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 45BBB05D2EF90AE10041A500 /* Products */;
 			projectDirPath = "";
@@ -328,6 +337,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		45BBB06A2EF90D4C0041A500 /* XCRemoteSwiftPackageReference "swift-math-parser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bradhowes/swift-math-parser";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.7.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		45BBB06B2EF90D4C0041A500 /* MathParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 45BBB06A2EF90D4C0041A500 /* XCRemoteSwiftPackageReference "swift-math-parser" */;
+			productName = MathParser;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 45BBB0542EF90AE10041A500 /* Project object */;
 }

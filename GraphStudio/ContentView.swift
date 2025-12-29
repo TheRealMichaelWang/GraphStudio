@@ -6,14 +6,25 @@
 //
 
 import SwiftUI
+import MathParser
+
+struct GraphItem: Identifiable {
+    let id = UUID()
+    
+    var label: String
+    var evaluator: Evaluator
+    let color: Color
+    
+    var hasEdited: Bool = false
+}
 
 struct ContentView: View {
+    @State private var items: [GraphItem] = []
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            GraphView(items: $items)
+            GraphInput(items: $items)
         }
         .padding()
     }
