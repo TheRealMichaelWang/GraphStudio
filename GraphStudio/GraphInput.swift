@@ -107,9 +107,9 @@ struct DraftRow: View {
 
 struct GraphInput: View {
     @Binding var items: [GraphItem]
-    var onTogglePanel: (() -> Void)?
     
     @State private var isAdding: Bool = false
+    @State private var isHidden: Bool = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -118,9 +118,13 @@ struct GraphInput: View {
                     .font(.headline)
                 Spacer()
                 Button {
-                    onTogglePanel?()
+                    isHidden.toggle()
                 } label: {
-                    Image(systemName: "sidebar.left")
+                    if isHidden {
+                        Image(systemName: "chevron.up")
+                    } else {
+                        Image(systemName: "chevron.down")
+                    }
                 }
                 Button {
                     isAdding = true
@@ -129,38 +133,40 @@ struct GraphInput: View {
                 }
                 .keyboardShortcut(.init("+"), modifiers: [.command])
             }
-            
             .padding()
             .background(.ultraThinMaterial)
-            List {
-                ForEach($items) { $item in
-                    GraphItemRow(item: $item)
+            
+            if (isHidden == false) {
+                List {
+                    ForEach($items) { $item in
+                        GraphItemRow(item: $item)
+                    }
+                    .onDelete { indexSet in
+                        items.remove(atOffsets: indexSet)
+                    }
+                    .onMove { from, to in
+                        items.move(fromOffsets: from, toOffset: to)
+                    }
+                    
+                    if isAdding {
+                        DraftRow(onSubmit: { item in
+                            guard isAdding else { return }
+                            withAnimation {
+                                isAdding = false
+                            }
+                            // Defer the append to the next run loop to avoid List diff glitches
+                            DispatchQueue.main.async {
+                                items.append(item)
+                            }
+                        }, onCancel: {
+                            withAnimation {
+                                isAdding = false
+                            }
+                        })
+                    }
                 }
-                .onDelete { indexSet in
-                    items.remove(atOffsets: indexSet)
-                }
-                .onMove { from, to in
-                    items.move(fromOffsets: from, toOffset: to)
-                }
-                
-                if isAdding {
-                    DraftRow(onSubmit: { item in
-                        guard isAdding else { return }
-                        withAnimation {
-                            isAdding = false
-                        }
-                        // Defer the append to the next run loop to avoid List diff glitches
-                        DispatchQueue.main.async {
-                            items.append(item)
-                        }
-                    }, onCancel: {
-                        withAnimation {
-                            isAdding = false
-                        }
-                    })
-                }
+                .listStyle(.plain)
             }
-            .listStyle(.plain)
         }
     }
 }
